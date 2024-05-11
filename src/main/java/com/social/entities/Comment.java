@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +23,23 @@ public class Comment {
     @NotNull
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdCommentDate;
+
+    // relationship between tables
+// ManyToOne
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    // relationship between tables
+    // OneToMany
+    @OneToMany(mappedBy = "comment",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Like> likes;
 }
