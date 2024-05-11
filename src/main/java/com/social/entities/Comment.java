@@ -1,6 +1,8 @@
 package com.social.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +14,12 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
+
+    @NotBlank(message = "comment text must not be empty")
+    @Column(columnDefinition = "TEXT")
     private String commentText;
-    private LocalDateTime createdComment;
+
+    @NotNull
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdCommentDate;
 }

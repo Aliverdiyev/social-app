@@ -1,6 +1,9 @@
 package com.social.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +15,12 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    private String postText;
-    private LocalDateTime createdPost;
 
+    @NotBlank(message = "post text must not be empty")
+    @Column(columnDefinition = "TEXT")
+    private String postText;
+
+    @NotNull
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdPostDate;
 }
