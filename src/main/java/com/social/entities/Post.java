@@ -3,10 +3,10 @@ package com.social.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +23,23 @@ public class Post {
     @NotNull
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdPostDate;
+
+    // relationship between tables
+// ManyToOne
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    // relationship between tables
+// OneToMany
+    @OneToMany(mappedBy = "post",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "post",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Like> likes;
 }

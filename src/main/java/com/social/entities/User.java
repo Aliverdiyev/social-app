@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,12 +16,16 @@ public class User {
     private Long userId;
 
     @NotBlank(message = "username must not be empty")
-    @Size(min = 2, max = 20, message = "required username must be min 2, max 20 character")
+    @Size(min = 2,
+            max = 20,
+            message = "required username must be min 2, max 20 character")
     @Column(unique = true)
     private String username;
 
     @NotBlank(message = "firstname must not be empty")
-    @Size(min = 2, max = 20, message = "required username must be min 2, max 20 character")
+    @Size(min = 2,
+            max = 20,
+            message = "required username must be min 2, max 20 character")
     private String firstName;
 
     @NotBlank(message = "lastname must not be empty")
@@ -41,10 +46,21 @@ public class User {
     @Column(columnDefinition = "DATE")
     private LocalDate birthday;
 
-/*
-    private String phone;
-    private String address;
-    private String city;
-    private String country;
-*/
+    // relationship between tables
+// OneToMany
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Like> likes;
+
 }

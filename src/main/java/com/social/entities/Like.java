@@ -17,4 +17,22 @@ public class Like {
     @NotNull
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdLikeTime;
+
+    // relationship between tables
+// ManyToOne
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
 }
